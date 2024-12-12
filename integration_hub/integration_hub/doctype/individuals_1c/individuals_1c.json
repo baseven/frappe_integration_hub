@@ -1,0 +1,91 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:description",
+ "creation": "2024-12-11 20:14:12.245192",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_wubl",
+  "uid",
+  "code",
+  "description",
+  "first_name",
+  "last_name",
+  "middle_name",
+  "inn",
+  "snils"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_wubl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "uid",
+   "fieldtype": "Data",
+   "label": "uid"
+  },
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "label": "code"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "description",
+   "unique": 1
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "first_name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "last_name"
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "middle_name"
+  },
+  {
+   "fieldname": "inn",
+   "fieldtype": "Data",
+   "label": "inn"
+  },
+  {
+   "fieldname": "snils",
+   "fieldtype": "Data",
+   "label": "snils"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-12-12 13:11:04.439816",
+ "modified_by": "Administrator",
+ "module": "Integration Hub",
+ "name": "individuals_1c",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

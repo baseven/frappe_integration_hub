@@ -1,0 +1,16 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h1>Individuals from 1C</h1>
+
+<!-- Buttons -->
+<button id="fetch_individuals">Fetch All Individuals</button>
+<input type="text" id="individual_uid" placeholder="Enter UID">
+<input type="text" id="full_name" placeholder="Enter Full Name">
+<button id="add_individual">Add Individual</button>
+
+<!-- Results -->
+<div id="result"></div>
+
+<script src="{{ '/assets/integration_hub/js/integration_hub.js' }}"></script>
+{% endblock %}
