@@ -1,3 +1,0 @@
-python-dotenv==1.0.1
-pydantic==2.10.3
-odata1c-client==0.1.2

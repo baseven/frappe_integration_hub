@@ -8,7 +8,9 @@ requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]
 dependencies = [
-    # "frappe~=15.0.0" # Installed and managed by bench.
+    "python-dotenv~=1.0.1",
+    "pydantic~=2.10.3",
+    "odata1c-client~=0.1.2"
 ]
 
 [build-system]
