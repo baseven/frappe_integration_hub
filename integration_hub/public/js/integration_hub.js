@@ -32,17 +32,26 @@ document.addEventListener("DOMContentLoaded", function () {
         const uid = document.getElementById("individual_uid").value.trim();
         const full_name = document.getElementById("full_name").value.trim();
 
+        // Prepare form data using URLSearchParams
+        const formData = new URLSearchParams();
+        if (uid) formData.append("uid", uid);
+        if (full_name) formData.append("full_name", full_name);
+
         fetch('/api/method/integration_hub.integration_hub.api.individuals.add_individual', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ uid, full_name }),
+            body: formData,
         })
         .then(response => response.json())
         .then(data => {
-            alert(data.message || "Success");
+            if (data.message) {
+                alert(data.message);
+            } else {
+                alert("Success");
+            }
         })
-        .catch(error => console.error('Error adding individual:', error));
+        .catch(error => {
+            console.error('Error adding individual:', error);
+            alert('Error occurred while adding individual.');
+        });
     };
 });
