@@ -1,3 +1,5 @@
+import json
+
 import frappe
 from frappe import _
 from integration_hub.integration_hub.services.individuals import IndividualsService
@@ -28,17 +30,24 @@ def fetch_individuals():
 
 
 @frappe.whitelist()
-def add_individual(uid=None, full_name=None):
+def add_individual():
 	"""
 	Add an individual to Frappe if not already present by uid or full_name.
-	Logs the input data and results for debugging.
 	"""
-	frappe.logger().info(f"Adding individual. UID: {uid}, Full Name: {full_name}")
+	data = frappe.local.form_dict.get("args")
 
 	try:
-		manager = IndividualsService.manager()
+		if not data:
+			frappe.throw(_("No data provided"))
 
-		# Fetch individual by UID or full name
+		# Parse JSON data
+		params = json.loads(data)
+		uid = params.get("uid")
+		full_name = params.get("full_name")
+
+		frappe.logger().info(f"Adding individual. UID: {uid}, Full Name: {full_name}")
+
+		manager = IndividualsService.manager()
 		individual = None
 		if uid:
 			individual = manager.get(uid)
@@ -47,15 +56,11 @@ def add_individual(uid=None, full_name=None):
 			individual = individuals[0] if individuals else None
 
 		if not individual:
-			frappe.logger().warning("Individual not found in 1C.")
 			frappe.throw(_("Individual not found in 1C."))
 
-		# Check if the individual already exists in the Frappe system
 		if frappe.db.exists("individuals_1c", {"uid": individual.uid}):
-			frappe.logger().info(f"Individual with UID {individual.uid} already exists in Frappe.")
 			return _("Individual already exists in Frappe.")
 
-		# Create a new individuals_1c document
 		individual_doc = frappe.new_doc("individuals_1c")
 		individual_doc.uid = individual.uid
 		individual_doc.code = individual.code
@@ -73,5 +78,3 @@ def add_individual(uid=None, full_name=None):
 	except Exception as e:
 		frappe.logger().error(f"Error adding individual: {str(e)}")
 		frappe.throw(_("Error adding individual: {0}").format(str(e)))
-
-

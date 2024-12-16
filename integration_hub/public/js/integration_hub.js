@@ -32,15 +32,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const uid = document.getElementById("individual_uid").value.trim();
         const full_name = document.getElementById("full_name").value.trim();
 
-        // Prepare form data using URLSearchParams
-        const formData = new URLSearchParams();
-        if (uid) formData.append("uid", uid);
-        if (full_name) formData.append("full_name", full_name);
-
-        fetch('/api/method/integration_hub.integration_hub.api.individuals.add_individual', {
-            method: 'POST',
-            body: formData,
-        })
+		fetch('/api/method/integration_hub.integration_hub.api.individuals.add_individual', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				args: JSON.stringify({ uid, full_name })  // Обернем данные в args
+			}),
+		})
         .then(response => response.json())
         .then(data => {
             if (data.message) {
