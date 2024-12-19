@@ -1,16 +1,47 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h1>Individuals from 1C</h1>
+<h1>Интеграция с каталогом "Физические лица" (данные из 1С)</h1>
+<p>
+    На этой странице вы можете загрузить список физических лиц из внешней системы (1С), а также добавить новое физическое лицо.
+</p>
 
-<!-- Buttons -->
-<button id="fetch_individuals">Fetch All Individuals</button>
-<input type="text" id="individual_uid" placeholder="Enter UID">
-<input type="text" id="full_name" placeholder="Enter Full Name">
-<button id="add_individual">Add Individual</button>
+<!-- Подсказки перед инпутами -->
+<div style="margin-bottom: 10px;">
+    <p>Введите UID или Полное имя (ФИО), чтобы добавить физическое лицо:</p>
+</div>
 
-<!-- Results -->
-<div id="result"></div>
+<!-- Поля для ввода UID и полного имени -->
+<input type="text" id="individual_uid" placeholder="Введите UID"
+       style="display: block; margin-bottom: 10px; width: 300px; padding: 5px;">
+
+<input type="text" id="full_name" placeholder="Введите полное имя (ФИО)"
+       style="display: block; margin-bottom: 10px; width: 300px; padding: 5px;">
+
+<!-- Кнопка добавления физического лица -->
+<button id="add_individual" style="display: block; margin-bottom: 20px;">
+    Добавить физическое лицо
+</button>
+
+<!-- Поле для отображения сообщений об ошибке или успехе -->
+<div id="message_area1" style="margin-bottom: 20px;"></div>
+
+<hr style="margin-bottom: 20px;">
+
+<!-- Информация и кнопка для загрузки списка -->
+<div style="margin-bottom: 20px;">
+    <button id="fetch_individuals" style="display: block; margin-bottom: 20px;">
+        Загрузить список физических лиц
+    </button>
+</div>
+
+<!-- Поле для отображения сообщений об ошибке или успехе -->
+<div id="message_area2" style="margin-bottom: 20px;"></div>
+
+<!-- Блок для отображения результатов (списка) -->
+<div id="result" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    <!-- Список будет загружаться сюда -->
+</div>
 
 <script src="{{ '/assets/integration_hub/js/integration_hub.js' }}"></script>
 {% endblock %}

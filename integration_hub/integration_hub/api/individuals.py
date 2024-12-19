@@ -1,5 +1,4 @@
 import frappe
-from frappe import _
 from integration_hub.integration_hub.services.individuals import IndividualsService
 
 
@@ -16,7 +15,6 @@ def fetch_individuals():
 	return result
 
 
-
 @frappe.whitelist()
 def add_individual(uid=None, full_name=None):
 	"""
@@ -24,23 +22,21 @@ def add_individual(uid=None, full_name=None):
 	"""
 	manager = IndividualsService.manager()
 
+	if not uid and not full_name:
+		frappe.throw("Необходимо указать UID или полное имя (ФИО).")
+	# Добавить проверку типов
 	if uid:
 		individual = manager.get(uid)
-	elif full_name:
+	else:
 		individuals = manager.filter(description=full_name).all(ignore_invalid=True)
 		individual = individuals[0] if individuals else None
-	else:
-		individual = None
-		frappe.throw(_("Either UID or Full Name must be provided."))
 
 	if not individual:
-		frappe.throw(_("Individual not found in 1C."))
+		frappe.throw("Физическое лицо не найдено в 1С.")
 
-	# Check if the individual already exists in the Frappe system
 	if frappe.db.exists("individuals_1c", {"uid": individual.uid}):
-		return _("Individual already exists in Frappe.")
+		frappe.throw("Физическое лицо уже добавлено во Frappe.")
 
-	# Create a new individuals_1c document
 	individual_doc = frappe.new_doc("individuals_1c")
 	individual_doc.uid = individual.uid
 	individual_doc.code = individual.code
@@ -53,4 +49,4 @@ def add_individual(uid=None, full_name=None):
 	individual_doc.insert()
 
 	frappe.db.commit()
-	return _("Individual added successfully.")
+	return "Individual added successfully."
