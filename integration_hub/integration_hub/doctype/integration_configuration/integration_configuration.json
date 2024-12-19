@@ -1,0 +1,108 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:1c_name",
+ "creation": "2024-12-19 12:12:31.648144",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "1c_tab",
+  "enable_1c",
+  "1c_name",
+  "1c_protocol",
+  "1c_host",
+  "1c_database_name",
+  "1c_auth_type",
+  "1c_login",
+  "1c_password",
+  "1c_organization",
+  "1c_description"
+ ],
+ "fields": [
+  {
+   "fieldname": "1c_tab",
+   "fieldtype": "Tab Break",
+   "label": "1C"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_1c",
+   "fieldtype": "Check",
+   "label": "Enable"
+  },
+  {
+   "fieldname": "1c_protocol",
+   "fieldtype": "Select",
+   "label": "Protocol",
+   "options": "https"
+  },
+  {
+   "fieldname": "1c_host",
+   "fieldtype": "Data",
+   "label": "Host"
+  },
+  {
+   "fieldname": "1c_database_name",
+   "fieldtype": "Data",
+   "label": "Database Name"
+  },
+  {
+   "fieldname": "1c_auth_type",
+   "fieldtype": "Select",
+   "label": "Authentication Type",
+   "options": "Basic Auth"
+  },
+  {
+   "fieldname": "1c_login",
+   "fieldtype": "Data",
+   "label": "Login"
+  },
+  {
+   "fieldname": "1c_password",
+   "fieldtype": "Password",
+   "label": "Password"
+  },
+  {
+   "fieldname": "1c_organization",
+   "fieldtype": "Link",
+   "label": "Organization",
+   "options": "Organization"
+  },
+  {
+   "fieldname": "1c_description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "1c_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "unique": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-12-19 12:42:19.587279",
+ "modified_by": "Administrator",
+ "module": "Integration Hub",
+ "name": "Integration Configuration",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
