@@ -1,4 +1,5 @@
 import frappe
+from frappe import _
 
 def get_integration_config():
 	"""
