@@ -1,6 +1,7 @@
 import frappe
 from frappe import _
 
+# TODO: add Integration Configuration name as a parameter instead of hardcoding it as 1c_test_ic
 def get_integration_config():
 	"""
 	Fetch integration configuration from the Integration Configuration DocType.

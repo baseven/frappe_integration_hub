@@ -1,0 +1,19 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h1>Работа с метаданными OData</h1>
+
+<!-- Кнопки для загрузки данных -->
+<button id="fetch_entity_types">Получить список EntityType</button>
+<button id="fetch_entity_sets">Получить список EntitySet</button>
+
+<!-- Поле для ввода названия EntityType -->
+<input type="text" id="entity_type" placeholder="Введите название EntityType">
+<button id="fetch_properties">Получить свойства</button>
+
+<!-- Блоки для отображения результатов -->
+<div id="message_area"></div>
+<div id="result"></div>
+
+<script src="{{ '/assets/integration_hub/js/metadata.js' }}"></script>
+{% endblock %}
