@@ -1,15 +1,20 @@
 import frappe
 from frappe import _
 
-# TODO: add Integration Configuration name as a parameter instead of hardcoding it as 1c_test_ic
-def get_integration_config():
+
+def get_integration_config(config_name: str):
 	"""
 	Fetch integration configuration from the Integration Configuration DocType.
-	Assumes there is a single configuration record in the system.
-	"""
-	config = frappe.get_doc("Integration Configuration", "1c_test_ic")
-	if not config:
-		frappe.throw(_("No Integration Configuration found."))
 
-	print("Integration config:", config)
+	:param config_name: Name of the integration configuration.
+	:return: Frappe document representing the configuration.
+	"""
+	if not config_name:
+		frappe.throw(_("Integration configuration name is required."))
+
+	config = frappe.get_doc("Integration Configuration", config_name)
+
+	if not config:
+		frappe.throw(_("Integration Configuration '{}' not found.").format(config_name))
+
 	return config

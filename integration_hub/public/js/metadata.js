@@ -2,6 +2,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const messageArea = document.getElementById("message_area");
     const resultDiv = document.getElementById("result");
 
+    // Получаем config_name из URL-параметров
+    const params = new URLSearchParams(window.location.search);
+    const configName = params.get("config_name");
+
+    if (!configName) {
+        alert("Ошибка: отсутствует параметр config_name. Вернитесь и выберите конфигурацию.");
+        window.location.href = "/select_configuration";
+        return;
+    }
+
     function showError(message) {
         messageArea.innerHTML = `<p style="color:red;">${message}</p>`;
     }
@@ -31,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         frappe.call({
             method: "integration_hub.integration_hub.api.metadata.fetch_entity_types",
+            args: { config_name: configName },
             callback: function (r) {
                 if (r.message) {
                     displayList("Entity Types", r.message);
@@ -38,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     showError("Не удалось получить список EntityType.");
                 }
             },
-            error: function () {
+            error: function (err) {
                 showError("Ошибка при загрузке списка EntityType.");
             },
         });
@@ -50,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         frappe.call({
             method: "integration_hub.integration_hub.api.metadata.fetch_entity_sets",
+            args: { config_name: configName },
             callback: function (r) {
                 if (r.message) {
                     displayList("Entity Sets", r.message);
@@ -57,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     showError("Не удалось получить список EntitySet.");
                 }
             },
-            error: function () {
+            error: function (err) {
                 showError("Ошибка при загрузке списка EntitySet.");
             },
         });
@@ -75,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         frappe.call({
             method: "integration_hub.integration_hub.api.metadata.fetch_properties",
-            args: { entity_type: entityType },
+            args: { config_name: configName, entity_type: entityType },
             callback: function (r) {
                 if (r.message) {
                     displayList(`Свойства EntityType: ${entityType}`, r.message.map(prop => `${prop.name}: ${prop.type}`));
@@ -83,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     showError(`Не удалось получить свойства для ${entityType}.`);
                 }
             },
-            error: function () {
+            error: function (err) {
                 showError(`Ошибка при загрузке свойств для ${entityType}.`);
             },
         });

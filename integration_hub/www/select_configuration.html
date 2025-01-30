@@ -1,0 +1,14 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h1>Select Integration Configuration</h1>
+<p>Choose an integration configuration to proceed:</p>
+
+<select id="configurations_list">
+    <option value="" disabled selected>Loading configurations...</option>
+</select>
+
+<button id="proceed_button" disabled>Proceed</button>
+
+<script src="{{ '/assets/integration_hub/js/select_configuration.js' }}"></script>
+{% endblock %}
