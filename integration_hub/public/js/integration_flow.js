@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         const label = document.createElement("label");
                         const checkbox = document.createElement("input");
                         checkbox.type = "checkbox";
-                        checkbox.value = prop.name;
+                        checkbox.value = JSON.stringify({ name: prop.name, type: prop.type });
                         label.appendChild(checkbox);
                         label.appendChild(document.createTextNode(` ${prop.name} (${prop.type})`));
                         fieldsListDiv.appendChild(label);
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.getElementById("create_flow").onclick = function () {
-        const selectedFields = Array.from(fieldsListDiv.querySelectorAll("input:checked")).map(cb => cb.value);
+        const selectedFields = Array.from(fieldsListDiv.querySelectorAll("input:checked")).map(cb => JSON.parse(cb.value));
         const flowName = flowNameInput.value.trim();
 
         if (!flowName) {
@@ -56,14 +56,28 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const flowData = {
+        const flowData = JSON.stringify({
             config_name: configName,
             entity_type: entityType,
             flow_name: flowName,
             fields: selectedFields
-        };
+        });
 
-        console.log("Создание интеграционного потока:", flowData);
+        frappe.call({
+            method: "integration_hub.integration_hub.api.integration_flow.create_integration_flow",
+            args: { flow_data: flowData },
+            callback: function (r) {
+                if (r.message) {
+                    alert(`Интеграционный поток "${flowName}" успешно создан.`);
+                } else {
+                    alert("Ошибка при создании потока.");
+                }
+            },
+            error: function (err) {
+                alert("Ошибка: не удалось создать поток.");
+                console.error(err);
+            },
+        });
     };
 
     loadEntityFields();
