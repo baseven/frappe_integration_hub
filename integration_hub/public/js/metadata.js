@@ -100,4 +100,14 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         });
     };
+
+    document.getElementById("setup_integration_flow").onclick = function () {
+        const entityType = document.getElementById("integration_entity_type").value.trim();
+        if (!entityType) {
+            showError("Введите название EntityType перед переходом.");
+            return;
+        }
+
+        window.location.href = `/integration_flow?config_name=${encodeURIComponent(configName)}&entity_type=${encodeURIComponent(entityType)}`;
+    };
 });

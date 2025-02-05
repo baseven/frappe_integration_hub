@@ -1,0 +1,24 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h1>Настройка входящего интеграционного потока</h1>
+
+<!-- Информация о конфигурации -->
+<p id="selected_config"></p>
+<p id="selected_entity_type"></p>
+
+<!-- Поле ввода названия интеграционного потока -->
+<label for="flow_name">Название потока:</label>
+<input type="text" id="flow_name" placeholder="Введите название потока">
+
+<!-- Блок выбора полей -->
+<h2>Выберите поля для интеграции:</h2>
+<div id="fields_list">
+    <p>Загрузка полей...</p>
+</div>
+
+<!-- Кнопка создания потока -->
+<button id="create_flow">Создать интеграционный поток</button>
+
+<script src="{{ '/assets/integration_hub/js/integration_flow.js' }}"></script>
+{% endblock %}

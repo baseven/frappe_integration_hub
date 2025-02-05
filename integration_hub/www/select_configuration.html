@@ -1,14 +1,15 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h1>Select Integration Configuration</h1>
-<p>Choose an integration configuration to proceed:</p>
+<h1>Выбор конфигурации интеграции</h1>
+<p>Выберите одну из доступных конфигураций, чтобы продолжить.</p>
 
+<label for="configurations_list"><strong>Доступные конфигурации:</strong></label>
 <select id="configurations_list">
-    <option value="" disabled selected>Loading configurations...</option>
+    <option value="" disabled selected>Загрузка списка конфигураций...</option>
 </select>
 
-<button id="proceed_button" disabled>Proceed</button>
+<button id="proceed_button" disabled>Перейти</button>
 
 <script src="{{ '/assets/integration_hub/js/select_configuration.js' }}"></script>
 {% endblock %}
