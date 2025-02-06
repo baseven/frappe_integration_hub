@@ -2,6 +2,9 @@ import frappe
 from frappe import _
 import json
 
+from integration_hub.integration_hub.services.integration_flow import IntegrationFlowService
+
+
 @frappe.whitelist()
 def create_integration_flow(flow_data):
 	"""
@@ -48,7 +51,23 @@ def create_integration_flow(flow_data):
 		frappe.throw(_("Ошибка создания интеграционного потока. Проверьте данные и попробуйте снова."))
 
 
-
 @frappe.whitelist()
 def run_integration_flow(flow_name):
-	return {"success": True, "message": f"Интеграционный поток '{flow_name}' успешно создан."}
+	"""
+	Запускает интеграционный поток и загружает 3 записи из 1С.
+
+	:param flow_name: Название интеграционного потока.
+	"""
+	try:
+		# Получаем объект интеграционного потока из Frappe
+		flow = frappe.get_doc("Integration Flow", flow_name)
+
+		# Создаем сервисный объект и загружаем данные
+		service = IntegrationFlowService(flow)
+		records = service.fetch_records()
+
+		return records
+
+	except Exception as e:
+		frappe.logger().error(f"Ошибка запуска интеграционного потока {flow_name}: {str(e)}")
+		frappe.throw(_("Ошибка при запуске интеграционного потока."))

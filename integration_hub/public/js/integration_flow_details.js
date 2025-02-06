@@ -14,13 +14,15 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("config_name").textContent = configName;
     document.getElementById("entity_type").textContent = entityType;
 
+    const fullFlowName = `${configName}/${flowName}`;
+
     document.getElementById("run_flow").onclick = function () {
         frappe.call({
             method: "integration_hub.integration_hub.api.integration_flow.run_integration_flow",
-            args: { flow_name: flowName },
+            args: { flow_name: fullFlowName },
             callback: function (r) {
                 if (r.message) {
-                    document.getElementById("integration_result").innerHTML = `<p>${r.message}</p>`;
+                    document.getElementById("integration_result").innerHTML = `<pre>${JSON.stringify(r.message, null, 2)}</pre>`;
                 } else {
                     alert("Ошибка при запуске потока.");
                 }
