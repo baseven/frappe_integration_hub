@@ -1,0 +1,19 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h1>Управление интеграционным потоком</h1>
+
+<!-- Информация о потоке -->
+<p><strong>Название потока:</strong> <span id="flow_name"></span></p>
+<p><strong>Конфигурация:</strong> <span id="config_name"></span></p>
+<p><strong>Тип сущности:</strong> <span id="entity_type"></span></p>
+
+<!-- Кнопка запуска потока -->
+<button id="run_flow">Запустить поток</button>
+
+<!-- Вывод результатов работы потока -->
+<h2>Результаты выполнения</h2>
+<div id="integration_result"></div>
+
+<script src="{{ '/assets/integration_hub/js/integration_flow_details.js' }}"></script>
+{% endblock %}

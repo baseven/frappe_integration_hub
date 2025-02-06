@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
             callback: function (r) {
                 if (r.message) {
                     alert(`Интеграционный поток "${flowName}" успешно создан.`);
+                    window.location.href = `/integration_flow_details?flow_name=${encodeURIComponent(flowName)}&config_name=${encodeURIComponent(configName)}&entity_type=${encodeURIComponent(entityType)}`;
                 } else {
                     alert("Ошибка при создании потока.");
                 }
