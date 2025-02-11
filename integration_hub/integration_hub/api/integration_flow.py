@@ -65,7 +65,7 @@ def run_integration_flow(flow_name):
 		# Создаем сервисный объект и загружаем данные
 		service = IntegrationFlowService(flow)
 		records = service.fetch_records()
-
+		# frappe.flags.records = records
 		return records
 
 	except Exception as e:
