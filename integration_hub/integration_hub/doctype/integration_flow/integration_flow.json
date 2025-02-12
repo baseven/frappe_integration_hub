@@ -30,7 +30,8 @@
    "fieldname": "config_name",
    "fieldtype": "Link",
    "label": "\u041a\u043e\u043d\u0444\u0438\u0433\u0443\u0440\u0430\u0446\u0438\u044f \u0438\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0438\u0438",
-   "options": "Integration Configuration"
+   "options": "Integration Configuration",
+   "reqd": 1
   },
   {
    "fieldname": "entity_type",
@@ -57,7 +58,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-05 22:12:21.835739",
+ "modified": "2025-02-11 18:19:55.917707",
  "modified_by": "Administrator",
  "module": "Integration Hub",
  "name": "Integration Flow",

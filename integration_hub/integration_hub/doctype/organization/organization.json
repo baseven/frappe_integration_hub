@@ -17,13 +17,15 @@
   {
    "fieldname": "organization_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Name",
+   "reqd": 1,
    "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-19 12:40:22.348022",
+ "modified": "2025-02-12 11:12:18.483805",
  "modified_by": "Administrator",
  "module": "Integration Hub",
  "name": "Organization",
