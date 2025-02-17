@@ -10,7 +10,7 @@ dynamic = ["version"]
 dependencies = [
     "python-dotenv==1.0.1",
     "pydantic==2.7.0",
-    "odata1c-client==0.1.4"
+    "odata1c-client==0.1.5"
 ]
 
 [build-system]
