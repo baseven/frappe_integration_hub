@@ -1,5 +1,4 @@
-from OData1C.connection import Connection
-from OData1C.odata.metadata_manager import MetadataManager
+from OData1C import Connection, MetadataManager
 from requests.auth import HTTPBasicAuth
 from integration_hub.integration_hub.services.integration_config import get_integration_config
 

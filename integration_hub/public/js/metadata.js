@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const messageArea = document.getElementById("message_area");
     const resultDiv = document.getElementById("result");
 
-    // Получаем config_name из URL-параметров
     const params = new URLSearchParams(window.location.search);
     const configName = params.get("config_name");
 
@@ -34,6 +33,29 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         resultDiv.appendChild(ul);
     }
+
+function displayProperties(properties, container = resultDiv, depth = 0) {
+    if (!properties || !properties.length) {
+        container.innerHTML += "<p>Нет данных</p>";
+        return;
+    }
+
+    const ul = document.createElement("ul");
+    properties.forEach(prop => {
+        const li = document.createElement("li");
+        li.innerHTML = `${"&nbsp;".repeat(depth * 4)}<strong>${prop.name}</strong>: ${prop.type}`;
+
+        if (prop.type === "Collection" && prop.properties) {
+            const subList = document.createElement("ul");
+            displayProperties(prop.properties, subList, depth + 1);
+            li.appendChild(subList);
+        }
+
+        ul.appendChild(li);
+    });
+
+    container.appendChild(ul);
+}
 
     document.getElementById("fetch_entity_types").onclick = function () {
         messageArea.innerHTML = "";
@@ -90,12 +112,12 @@ document.addEventListener("DOMContentLoaded", function () {
             args: { config_name: configName, entity_type: entityType },
             callback: function (r) {
                 if (r.message) {
-                    displayList(`Свойства EntityType: ${entityType}`, r.message.map(prop => `${prop.name}: ${prop.type}`));
+                    displayProperties(r.message);
                 } else {
                     showError(`Не удалось получить свойства для ${entityType}.`);
                 }
             },
-            error: function (err) {
+            error: function () {
                 showError(`Ошибка при загрузке свойств для ${entityType}.`);
             },
         });
