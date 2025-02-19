@@ -1,5 +1,6 @@
-from OData1C import Connection, EntityManager
+import json
 from requests.auth import HTTPBasicAuth
+from OData1C import Connection, EntityManager
 from integration_hub.integration_hub.services.integration_config import get_integration_config
 from integration_hub.integration_hub.utils.model_builder import ModelBuilder
 
@@ -22,12 +23,12 @@ class IntegrationFlowService:
 
 	def build_model(self):
 		"""
-		Создает Pydantic-модель на основе полей из Integration Flow.
+		Создает Pydantic-модель на основе полей из Integration Flow с поддержкой вложенных моделей.
 
 		:return: Динамически сгенерированная Pydantic-модель.
 		"""
-		fields = [{"fieldname": field.fieldname, "fieldtype": field.fieldtype} for field in
-				  self.flow.fields]
+		data = json.loads(self.flow.fields_json_data)
+		fields = data.get("fields", [])
 		return ModelBuilder.create_model(self.flow.flow_name, fields)
 
 	def get_manager(self) -> EntityManager:
@@ -54,8 +55,8 @@ class IntegrationFlowService:
 
 	def fetch_records(self):
 		"""
-		Получает 3 записи из 1С для указанного EntityType.
+		Получает все записи из 1С для указанного EntityType.
 
 		:return: Список записей (JSON).
 		"""
-		return self.manager.top(3).all(ignore_invalid=True)
+		return self.manager.all(ignore_invalid=True)

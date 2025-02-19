@@ -1,7 +1,6 @@
+import json
 import frappe
 from frappe import _
-import json
-
 from integration_hub.integration_hub.services.integration_flow import IntegrationFlowService
 
 
@@ -182,13 +181,9 @@ def run_integration_flow(flow_name):
 	:param flow_name: Название интеграционного потока.
 	"""
 	try:
-		# Получаем объект интеграционного потока из Frappe
 		flow = frappe.get_doc("Integration Flow", flow_name)
-
-		# Создаем сервисный объект и загружаем данные
 		service = IntegrationFlowService(flow)
 		records = service.fetch_records()
-		# frappe.flags.records = records
 		return records
 
 	except Exception as e:
