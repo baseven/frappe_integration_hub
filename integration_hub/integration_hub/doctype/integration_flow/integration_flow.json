@@ -11,6 +11,7 @@
   "config_name",
   "entity_type",
   "fields",
+  "fields_json_data",
   "status"
  ],
  "fields": [
@@ -54,11 +55,16 @@
    "label": "\u0421\u0442\u0430\u0442\u0443\u0441",
    "options": "Active\nDraft",
    "reqd": 1
+  },
+  {
+   "fieldname": "fields_json_data",
+   "fieldtype": "JSON",
+   "label": "\u041f\u043e\u043b\u044f \u0434\u043b\u044f \u0438\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0438\u0438 (JSON)"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-11 18:19:55.917707",
+ "modified": "2025-02-19 13:52:49.614997",
  "modified_by": "Administrator",
  "module": "Integration Hub",
  "name": "Integration Flow",

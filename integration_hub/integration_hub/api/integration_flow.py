@@ -119,13 +119,6 @@ def transform_fields_structure(data, parent_name=None):
 
 		# Если поле является коллекцией (содержит вложенные поля)
 		if field.get("type") == "Collection" and "fields" in field:
-			# Добавляем родительскую коллекцию
-			flattened_data.append({
-				"name": field["name"],
-				"type": field["type"],
-				"parent_name": parent_name
-			})
-
 			# Рекурсивно обрабатываем вложенные поля в коллекции
 			flattened_data.extend(
 				transform_fields_structure({"fields": field["fields"]}, parent_name=field["name"]))
@@ -159,7 +152,8 @@ def create_integration_flow(flow_data):
 			"flow_name": f"{config_name}/{flow_name}",
 			"config_name": config_name,
 			"entity_type": entity_type,
-			"status": "Draft"
+			"status": "Draft",
+			"fields_json_data": json.dumps({"fields": selected_fields}, ensure_ascii=False, indent=2)  # Add JSON formatted data
 		})
 
 		# Add the transformed fields to the "Integration Flow Field"
