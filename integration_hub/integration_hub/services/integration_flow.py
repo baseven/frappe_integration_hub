@@ -60,3 +60,15 @@ class IntegrationFlowService:
 		:return: Список записей (JSON).
 		"""
 		return self.manager.all(ignore_invalid=True)
+
+	def fetch_record(self, guid):
+		"""Получает одну запись из 1С по GUID."""
+		return self.manager.get(guid=guid)
+
+	def create_record(self, data):
+		"""Создает новую запись в 1С."""
+		return self.manager.create(data)
+
+	def update_record(self, guid, data):
+		"""Обновляет запись в 1С."""
+		return self.manager.update(guid, data)
