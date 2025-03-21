@@ -189,3 +189,59 @@ def run_integration_flow(flow_name):
 	except Exception as e:
 		frappe.logger().error(f"Ошибка запуска интеграционного потока {flow_name}: {str(e)}")
 		frappe.throw(_("Ошибка при запуске интеграционного потока."))
+
+
+@frappe.whitelist()
+def run_output_integration_flow(flow_name, doctype_name, records):
+	"""
+	Запускает исходящий интеграционный поток, загружает данные из Frappe в 1С.
+
+	:param doctype_name: Название Doctype Frappe
+	:param flow_name: Название интеграционного потока.
+	:param records: Список записей из Frappe (уже с нужными именами полей).
+	"""
+	flow = frappe.get_doc("Integration Flow", flow_name)
+	service = IntegrationFlowService(flow)
+
+	for record in records:
+		frappe_docname = record.get("name")
+		guid = record.get("Ref_Key")
+
+		odata_payload = {
+			k: v for k, v in record.items()
+			if k not in ("name", "Ref_Key")
+		}
+
+		if guid:
+			try:
+				service.update_record(guid, odata_payload)
+			except Exception as e:
+				frappe.logger().error(
+					f"Ошибка при обновлении записи в 1С (guid: {guid}): {str(e)}")
+		else:
+			try:
+				created_record = service.create_record(odata_payload)
+				new_ref_key = created_record.model_dump().get("Ref_Key")
+				if new_ref_key and frappe_docname:
+					update_frappe_ref_key(doctype_name, frappe_docname, new_ref_key)
+			except Exception as e:
+				frappe.logger().error(f"Ошибка создания записи в 1С: {str(e)}")
+
+
+
+def update_frappe_ref_key(doctype_name, record, ref_key):
+	"""
+	Обновляет ref_key в записи Frappe после успешного создания в 1С.
+
+	:param doctype_name: Название DocType в Frappe.
+	:param record: Запись во Frappe.
+	:param ref_key: Значение ref_key, полученное из 1С.
+	"""
+	if ref_key:
+		try:
+			doc = frappe.get_doc(doctype_name, record)
+			doc.ref_key = ref_key
+			doc.save(ignore_permissions=True)
+			frappe.db.commit()
+		except Exception as e:
+			frappe.logger().error(f"Ошибка при обновлении ref_key в Frappe (record={record}): {str(e)}")
